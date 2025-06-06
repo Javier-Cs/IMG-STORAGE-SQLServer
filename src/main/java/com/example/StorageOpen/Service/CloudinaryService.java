@@ -2,6 +2,7 @@ package com.example.StorageOpen.Service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,13 +17,17 @@ import java.util.Objects;
 
 @Service
 public class CloudinaryService {
-    Cloudinary cloudinary;
+    private final Cloudinary cloudinary;
 
-    public CloudinaryService() {
+    public CloudinaryService(
+            @Value("${cloudinary.cloud-name}") String cloudName,
+            @Value("${cloudinary.api-key}") String apiKey,
+            @Value("${cloudinary.api-secret}") String apiSecret) {
+
         Map<String, String> valoresMap= new HashMap<>();
-        valoresMap.put("cloud_name", "IMGStorage");
-        valoresMap.put("cloud_secret", "61725");
-        valoresMap.put("cloud_url", "");
+        valoresMap.put("cloud_name", cloudName);
+        valoresMap.put("api_key", apiKey);
+        valoresMap.put("api_secret", apiSecret);
         cloudinary = new Cloudinary(valoresMap);
     }
 
